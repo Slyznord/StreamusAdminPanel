@@ -1,0 +1,37 @@
+@import '../variables';
+
+.icon {
+  &_small {
+    width: 18px;
+    height: 18px;
+  }
+
+  &_normal {
+    width: 21px;
+    height: 21px;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: .4s ease-in-out;
+  }
+
+  &_secondary {
+    background: $secondary-color;
+    color: $text-primary;
+
+    &:hover {
+      background: $primary-color;
+      color: #fff;
+    }
+  }
+
+  &_circle {
+    border-radius: $rounded-full;
+  }
+}

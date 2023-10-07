@@ -1,0 +1,53 @@
+.wr-table {
+  @apply
+    flex
+    flex-row
+    justify-start
+    items-center
+    w-full
+  ;
+
+  &_expand {
+    .wr-table-row-container {
+      max-height: 9000px;
+      transition: max-height .45s cubic-bezier(0, 1, 0, 1);
+    }
+
+    .wr-table__expand-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__expand-icon {
+    @apply
+      transition
+      transition-all
+      duration-500
+    ;
+  }
+
+  &-row {
+    @apply
+      flex
+      flex-row
+      justify-start
+      items-center
+      w-full
+      mb-4
+      px-8
+      rounded-md
+    ;
+
+    &-container {
+      @apply
+        transition
+        transition-all
+        duration-300
+        overflow-hidden
+      ;
+
+      max-height: 0;
+      transition: max-height .45s cubic-bezier(0, 1, 0, 1);
+    }
+  }
+}

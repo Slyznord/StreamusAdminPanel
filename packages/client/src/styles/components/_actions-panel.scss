@@ -1,0 +1,32 @@
+@import '../variables';
+
+.actions-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+
+  &_justify-end {
+    justify-content: flex-end;
+  }
+
+  &_justify-between {
+    justify-content: space-between;
+  }
+
+  &_items-center {
+    align-items: center;
+  }
+
+  &_mb-2 {
+    margin-bottom: 2rem;
+  }
+
+  &_sticky-top {
+    position: sticky;
+    left: 0;
+    top: 0;
+    background: #fff;
+  }
+}

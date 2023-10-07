@@ -1,0 +1,30 @@
+@import '../variables';
+
+.container {
+  width: 100%;
+  max-width: 100%;
+
+  &_bg-white {
+    background: #fff;
+  }
+
+  &_rounded-md {
+    border-radius: $rounded-md;
+  }
+
+  &_padding-30 {
+    padding: 30px;
+
+    @media (max-width: 768px) {
+      padding: 15px;
+    }
+  }
+
+  &_h-full {
+    height: 100%;
+  }
+
+  &_shadow-md {
+    box-shadow: 0 0 10px rgba(#363636, .25);
+  }
+}

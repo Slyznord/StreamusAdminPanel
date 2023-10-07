@@ -1,0 +1,16 @@
+@import '../variables';
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  width: 100%;
+  align-items: flex-start;
+
+  &__label {
+    font-size: .75rem;
+    font-weight: 500;
+    color: $text-primary;
+    margin-bottom: 0.5rem;
+  }
+}

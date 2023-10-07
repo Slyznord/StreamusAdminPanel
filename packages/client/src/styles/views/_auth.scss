@@ -1,0 +1,16 @@
+@import '../variables';
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 380px;
+  padding: 35px 30px;
+  border-radius: $rounded-md;
+  background: #fff;
+  margin: auto;
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+}

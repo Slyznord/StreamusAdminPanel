@@ -1,0 +1,16 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "dev": "lerna run dev",
+    "dev:client": "lerna run serve --scope=client",
+    "dev:server": "lerna run dev --scope=server"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^5.4.3"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  width: 100%;
+
+  &_col-4 {
+    grid-template-columns: repeat(4, 24%);
+
+    @media (max-width: 1280px) {
+      grid-template-columns: repeat(3, 33%);
+    }
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 48%);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 100%;
+    }
+  }
+
+  &_gap-1 {
+    grid-gap: 1rem;
+  }
+}

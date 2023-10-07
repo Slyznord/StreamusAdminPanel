@@ -1,0 +1,72 @@
+@import '../variables';
+
+.tabs {
+  &__header {
+    background: #fff;
+    border-radius: $rounded-md;
+    padding: 15px 30px;
+
+    @media (max-width: 768px) {
+      padding: 15px;
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    &_overflow-y-scroll {
+      overflow-y: auto;
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: wrap;
+      gap: 1rem;
+      width: 100%;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    border-radius: $rounded-md;
+    position: relative;
+
+    &_bg-secondary {
+      background: $secondary-color;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: $text-primary;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    transition: .8s linear;
+
+    &_active {
+      color: $text-white;
+    }
+  }
+
+  &__selected {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 50px;
+    border-radius: $rounded-md;
+    background: $primary-color;
+    color: $text-white;
+    transition: .4s ease;
+  }
+}

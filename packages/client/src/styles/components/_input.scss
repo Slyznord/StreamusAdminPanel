@@ -1,0 +1,17 @@
+@import '../variables';
+
+.input {
+  width: 100%;
+  max-width: 100%;
+  border-radius: $rounded-md;
+  padding: 0 1rem;
+  border: none;
+  height: 40px;
+  box-shadow: 0 0 10px rgba(54, 54, 54, 0.25);
+  outline-color: $primary-color;
+
+  &_error {
+    border: thin solid $error-color;
+    outline: none;
+  }
+}

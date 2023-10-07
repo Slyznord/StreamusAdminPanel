@@ -1,0 +1,44 @@
+@import '../variables';
+
+.upload-file {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+
+  &__label {
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding: 1rem 2rem;
+    background: $primary-color;
+    border-radius: $rounded-md;
+    cursor: pointer;
+    transition: .4s ease-in-out;
+
+    &:hover {
+      background: $primary-color-hover;
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    color: $text-white;
+  }
+
+  &__text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: $text-white;
+
+    &_black {
+      color: $text-primary;
+    }
+  }
+
+  &__input {
+    display: none;
+  }
+}

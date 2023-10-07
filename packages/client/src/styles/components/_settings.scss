@@ -1,0 +1,31 @@
+@import '../variables';
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: auto;
+  height: auto;
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: auto;
+    height: auto;
+    padding: 1rem 1.5rem;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(#363636, .15);
+    border-radius: $rounded-md;
+    z-index: 10;
+  }
+}

@@ -1,0 +1,13 @@
+@import '../variables';
+
+.subtitle {
+  color: $text-primary;
+
+  &_font-base {
+    font-size: 1rem;
+  }
+
+  &_semibold {
+    font-weight: 600;
+  }
+}

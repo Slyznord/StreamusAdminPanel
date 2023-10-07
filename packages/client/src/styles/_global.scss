@@ -1,0 +1,62 @@
+@import './_variables';
+@import './mixins/generate';
+
+body {
+  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  font-family: 'Inter', sans-serif;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 45px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.w-full {
+  width: 100%;
+}
+
+// Generate margin's
+$rules: [
+  [ml, margin-left],
+  [mt, margin-top],
+  [mb, margin-bottom],
+  [mr, margin-right],
+];
+
+@each $item in $rules {
+  @include generate(nth($item, 1), nth($item, 2));
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.downloadFile { display: none; }

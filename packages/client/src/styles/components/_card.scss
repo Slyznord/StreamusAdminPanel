@@ -1,0 +1,61 @@
+@import '../variables';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  padding: 15px;
+  border-radius: $rounded-md;
+  box-shadow: 0 0 10px rgba(54, 54, 54, 0.25);
+  background: #fff;
+  position: relative;
+  //overflow: hidden;
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    &_justify-between {
+      justify-content: space-between;
+    }
+
+    &_items-center {
+      align-items: center;
+    }
+  }
+
+  &__action-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 130px;
+  }
+
+  &__headline {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $text-primary;
+  }
+
+  &__p {
+    font-size: 1rem;
+    font-weight: 400;
+    word-break: break-all;
+
+    &_primary {
+      color: $text-primary;
+    }
+
+    &_secondary {
+      color: $text-secondary;
+    }
+
+    &_font-semibold {
+      font-weight: 600;
+    }
+  }
+}
