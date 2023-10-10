@@ -5,6 +5,7 @@ import QuizModel from './quiz.model'
 import SettingsModel from './settings'
 import TabModel from './tab.model'
 import UserModel from './user.model'
+import VoteModel from './vote.model'
 
 export default [
   AdminModel,
@@ -13,5 +14,6 @@ export default [
   QuizModel,
   SettingsModel,
   TabModel,
-  UserModel
+  UserModel,
+  VoteModel
 ]

@@ -7,25 +7,26 @@ import {
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
 
+
 @Table({
-  tableName: 'admin',
+  tableName: 'votes',
   paranoid: false,
   timestamps: false
 })
-class AdminModel extends Model {
+class VoteModel extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column(DataTypes.INTEGER)
-  user_id: number
+  vote_id: number
+
+  @Column(DataTypes.INTEGER)
+  tab_id: number
 
   @Column(DataTypes.STRING)
-  login: string
+  tab_name: string
 
   @Column(DataTypes.STRING)
-  pass_hash: string
-
-  @Column(DataTypes.STRING)
-  salt: string
+  presentation_name: string
 }
 
-export default AdminModel
+export default VoteModel

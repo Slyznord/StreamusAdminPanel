@@ -17,9 +17,9 @@
           :key="index"
           :class="[
             'flex justify-center items-center px-6 p-2 rounded-md cursor-pointer transition-all duration-500 hover:bg-primary',
-            selectedTab && selectedTab.id === item.id ? 'bg-primary' : 'bg-gray-300'
+            selectedTab && selectedTab.tab_id === item.tab_id ? 'bg-primary' : 'bg-gray-300'
           ]"
-          @click="onSelectTab(item)"
+          @click="() => {}"
         >
           <span class="text-base font-semibold text-white">{{ item.name }}</span>
         </div>
@@ -77,7 +77,7 @@ import Button from '@/components/UI/Button'
 import ModalMixin from '@/mixins/Modal.mixin'
 
 import { PlusCircleIcon, TrashIcon } from '@heroicons/vue/outline'
-import { ref, computed, onMounted, toRefs } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -103,9 +103,8 @@ export default {
     TrashIcon
   },
   setup (props) {
-    const { vote, elements, isEditing } = toRefs(props)
+    // const { vote, isEditing } = toRefs(props)
     const store = useStore()
-    const presentations = ref([])
     const buttons = ref([
       {
         value: 'Добавить',
@@ -123,7 +122,7 @@ export default {
         classes: 'button button_normal button_success',
         icon: null,
         onClick: (fn) => {
-          onSaveVote(fn)
+          // onSaveVote(fn)
         }
       },
       {
@@ -138,74 +137,21 @@ export default {
     const tabs = computed(() => {
       return store.state.Translation.tabs
     })
+    const presentations = ref([])
     const selectedTab = ref(null)
-
-    if (vote.value && elements.value) {
-      selectedTab.value = {
-        id: vote.value.section_id,
-        name: vote.value.section_name
-      }
-      elements.value.forEach(item => presentations.value.push(item))
-    }
 
     onMounted(async () => {
       if (!store.state.Translation.tabs) {
         const tabs = await store.dispatch('Translation/getTabs')
         store.commit('Translation/setTabs', tabs)
+
+        selectedTab.value = tabs[0].tab_id
       }
     })
-
-    async function onDeletePresentation (item, index) {
-      if (Object.keys(item).includes('id')) {
-        await store.dispatch('Vote/deletePresentation', item.id)
-      }
-
-      presentations.value.splice(index, 1)
-    }
-
-    async function onSaveVote (close) {
-      if (!(presentations.value.length && selectedTab.value)) {
-        return alert('Вы обязательно должны выбрать секцию и добавить хотя бы одного докладчика')
-      }
-
-      const { id, name } = selectedTab.value
-
-      if (isEditing.value) {
-        await store.dispatch('Vote/updateVote', {
-          id: vote.value.id,
-          sectionId: id,
-          sectionName: name,
-          presentations: presentations.value
-        })
-      } else {
-        await store.dispatch('Vote/saveVote', {
-          sectionId: id,
-          sectionName: name,
-          presentations: presentations.value
-        })
-      }
-
-      const votes = await store.dispatch('Vote/getVote')
-      store.commit('Vote/setVotes', votes)
-
-      close()
-    }
-
-    function onSelectTab (tab) {
-      if (selectedTab.value?.id === tab.id) {
-        selectedTab.value = null
-        return
-      }
-
-      selectedTab.value = tab
-    }
 
     return {
       buttons,
       presentations,
-      onDeletePresentation,
-      onSaveVote,
-      onSelectTab,
       selectedTab,
       tabs
     }

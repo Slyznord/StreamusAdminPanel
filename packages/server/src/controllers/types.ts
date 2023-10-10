@@ -52,6 +52,13 @@ type settings = {
   favicon?: string | null
 }
 
+type vote = {
+  vote_id?: number,
+  tab_id?: number,
+  tab_name: string,
+  presentation_name: string
+}
+
 export {
   admin,
   answer,
@@ -59,5 +66,6 @@ export {
   quiz,
   question,
   settings,
-  tab
+  tab,
+  vote
 }

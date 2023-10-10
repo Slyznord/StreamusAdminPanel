@@ -19,7 +19,7 @@
       <template #default>
         <Row
           :headers="headers"
-          :items="votes"
+          :items="votes || []"
           classes="wr-table-row shadow-md-y-0 py-2"
         >
           <template #controls="{ item: element }">
@@ -30,7 +30,7 @@
                 :is="item.icon"
                 :class="item.classes"
                 @click="item.onClick(element)"
-              ></component>
+              />
             </div>
           </template>
         </Row>
@@ -135,7 +135,7 @@ export default {
     })
 
     async function getVotes () {
-      const votes = await store.dispatch('Vote/getVote')
+      const votes = await store.dispatch('Vote/getVotes')
       store.commit('Vote/setVotes', votes)
     }
 

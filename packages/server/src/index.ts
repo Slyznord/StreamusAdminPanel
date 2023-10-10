@@ -15,6 +15,7 @@ import quiz_route from './routes/v1/quiz/quiz'
 import question_route from './routes/v1/quiz/question'
 import settings_route from './routes/v1/translation/settings'
 import tab_route from './routes/v1/translation/tab'
+import vote_route from './routes/v1/vote'
 
 dotenv.config()
 
@@ -32,6 +33,7 @@ app.use(quiz_route)
 app.use(question_route)
 app.use(settings_route)
 app.use(tab_route)
+app.use(vote_route)
 
 app.listen(port, async () => {
   console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
