@@ -1,4 +1,4 @@
-import SettingsModel from '../models/settings'
+import SettingsModel from '../../models/admin/settings'
 import type { settings } from './types'
 
 class SettingsController {

@@ -56,7 +56,13 @@ type vote = {
   vote_id?: number,
   tab_id?: number,
   tab_name: string,
-  presentation_name: string
+  presentations?: []
+}
+
+type presentation = {
+  presentation_id?: number,
+  name: string,
+  vote_id?: number
 }
 
 export {
@@ -65,6 +71,7 @@ export {
   code,
   quiz,
   question,
+  presentation,
   settings,
   tab,
   vote

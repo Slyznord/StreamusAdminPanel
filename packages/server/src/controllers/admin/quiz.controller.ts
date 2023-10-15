@@ -1,6 +1,6 @@
-import AnswersModel from '../models/answers.model'
-import QuizModel from '../models/quiz.model'
-import QuestionModel from '../models/question.model'
+import AnswersModel from '../../models/admin/answers.model'
+import QuizModel from '../../models/admin/quiz.model'
+import QuestionModel from '../../models/admin/question.model'
 import type { quiz } from './types'
 
 class QuizController {

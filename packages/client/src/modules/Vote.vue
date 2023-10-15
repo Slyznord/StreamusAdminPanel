@@ -72,7 +72,7 @@ export default {
     const $vfm = inject('$vfm')
     const headers = ref([
       {
-        column: 'id',
+        column: 'vote_id',
         label: 'ID',
         classesHeader: 'flex flex-row items-center w-1/5 self-center text-lg font-semibold',
         classesIcon: 'mr-2',
@@ -81,7 +81,7 @@ export default {
         onClick: () => {}
       },
       {
-        column: 'section_name',
+        column: 'tab_name',
         label: 'Секция',
         classesHeader: 'flex flex-row items-center w-1/3 text-lg font-semibold',
         classesIcon: 'mr-2',
@@ -104,14 +104,12 @@ export default {
         icon: 'PencilIcon',
         classes: 'w-6 text-gray-500 cursor-pointer transition transition-all duration-500 hover:text-gray-700 stroke-1',
         onClick: async (vote) => {
-          const presentations = await store.dispatch('Vote/getPresentations', vote.id)
-
           $vfm.show({
             component: CreateVoteModal,
             bind: {
-              vote,
-              elements: presentations,
-              isEditing: true
+              isEditing: true,
+              title: 'Редактирование голосования',
+              vote
             }
           })
         }
@@ -119,8 +117,8 @@ export default {
       {
         icon: 'TrashIcon',
         classes: 'w-6 text-gray-500 cursor-pointer transition transition-all duration-500 hover:text-gray-700 stroke-1',
-        onClick: async ({ id }) => {
-          await store.dispatch('Vote/deleteVote', id)
+        onClick: async ({ vote_id: voteID }) => {
+          await store.dispatch('Vote/deleteVote', { vote_id: voteID })
           await getVotes()
         }
       }

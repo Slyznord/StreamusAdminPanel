@@ -1,11 +1,12 @@
 import {
   AutoIncrement,
-  Column,
+  Column, HasMany,
   Model,
   PrimaryKey,
   Table
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
+import PresentationsModel from './presentations.model'
 
 
 @Table({
@@ -25,8 +26,12 @@ class VoteModel extends Model {
   @Column(DataTypes.STRING)
   tab_name: string
 
-  @Column(DataTypes.STRING)
-  presentation_name: string
+  @HasMany(() => PresentationsModel, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    hooks: true
+  })
+  presentations: PresentationsModel[]
 }
 
 export default VoteModel

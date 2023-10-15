@@ -1,6 +1,6 @@
 import { Router} from 'express'
 import { ROUTES_VERSION } from '../../../constants'
-import SettingsController from '../../../controllers/settings.controller'
+import SettingsController from '../../../controllers/admin/settings.controller'
 
 const CURRENT_ROUTE = `${ROUTES_VERSION}/settings`
 const router = Router()

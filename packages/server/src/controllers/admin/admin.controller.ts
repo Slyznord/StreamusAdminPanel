@@ -1,4 +1,4 @@
-import admin_model from '../models/admin.model'
+import admin_model from '../../models/admin/admin.model'
 
 class AdminController {
   private async getUser (login: string) {

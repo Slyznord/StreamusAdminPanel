@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
-import UserController from '../../../controllers/user.controller'
+import UserController from '../../../controllers/admin/user.controller'
 
 const router = Router()
 const CURRENT_ROUTE = `${ROUTES_VERSION}/code`
