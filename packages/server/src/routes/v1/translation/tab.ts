@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
 
-import TabController from '../../../controllers/tab.controller'
+import TabController from '../../../controllers/admin/tab.controller'
 
 const router = Router()
 const CURRENT_ROUTE = `${ROUTES_VERSION}/tab`

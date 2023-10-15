@@ -1,4 +1,4 @@
-import answers_model from '../models/answers.model'
+import answers_model from '../../models/admin/answers.model'
 import type { answer } from './types'
 
 class AnswerController {

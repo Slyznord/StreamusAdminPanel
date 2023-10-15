@@ -18,7 +18,7 @@
         :item="item"
         :column="header.column"
       >
-        {{ item }}
+        {{ item[header.column] }}
       </slot>
     </div>
 

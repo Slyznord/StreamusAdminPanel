@@ -1,6 +1,6 @@
-import UserModel from '../models/user.model'
+import UserModel from '../../models/admin/user.model'
 import type { code } from './types'
-import { UPLOAD_PATH } from '../constants'
+import { UPLOAD_PATH } from '../../constants'
 import fs from 'fs'
 
 class UserController {

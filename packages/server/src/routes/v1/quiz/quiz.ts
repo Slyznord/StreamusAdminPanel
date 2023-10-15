@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
-import type { answer, question } from '../../../controllers/types'
+import type { answer, question } from '../../../controllers/admin/types'
 
-import AnswerController from '../../../controllers/answer.controller'
-import QuizController from '../../../controllers/quiz.controller'
-import QuestionController from '../../../controllers/question.controller'
+import AnswerController from '../../../controllers/admin/answer.controller'
+import QuizController from '../../../controllers/admin/quiz.controller'
+import QuestionController from '../../../controllers/admin/question.controller'
 
 const router = Router()
 const CURRENT_ROUTE = `${ROUTES_VERSION}/quiz`

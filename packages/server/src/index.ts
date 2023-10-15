@@ -4,7 +4,6 @@ import body_parser from 'body-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
-import { connect as db_connect } from './dbConnect'
 import models from './init/models'
 
 import admin_route from './routes/v1/admin/auth'
@@ -13,8 +12,10 @@ import code_route from './routes/v1/translation/user'
 import file_route from './routes/v1/file'
 import quiz_route from './routes/v1/quiz/quiz'
 import question_route from './routes/v1/quiz/question'
+import presentation_route from './routes/v1/presentation'
 import settings_route from './routes/v1/translation/settings'
 import tab_route from './routes/v1/translation/tab'
+import vote_route from './routes/v1/vote'
 
 dotenv.config()
 
@@ -30,12 +31,13 @@ app.use(code_route)
 app.use(file_route)
 app.use(quiz_route)
 app.use(question_route)
+app.use(presentation_route)
 app.use(settings_route)
 app.use(tab_route)
+app.use(vote_route)
 
 app.listen(port, async () => {
   console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
-  await db_connect()
+  await models.initAdminDB()
+  // await models.initUserDB()
 })
-
-models.init()

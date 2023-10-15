@@ -1,4 +1,4 @@
-import tab_model from '../models/tab.model'
+import tab_model from '../../models/admin/tab.model'
 import type { tab } from './types'
 
 class TabController {

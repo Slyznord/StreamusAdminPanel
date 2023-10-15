@@ -9,7 +9,7 @@
     @before-open="overwriteParams($event)"
   >
     <div class="container container_h-full column">
-      <h2 class="headline mb-6">Создание голосования</h2>
+      <h2 class="headline mb-6">{{ title }}</h2>
 
       <div class="flex flex-row items-center gap-4 mb-6">
         <div
@@ -17,9 +17,9 @@
           :key="index"
           :class="[
             'flex justify-center items-center px-6 p-2 rounded-md cursor-pointer transition-all duration-500 hover:bg-primary',
-            selectedTab && selectedTab.id === item.id ? 'bg-primary' : 'bg-gray-300'
+            selectedTab === item.tab_id ? 'bg-blue-200' : 'bg-gray-300'
           ]"
-          @click="onSelectTab(item)"
+          @click="onSelectTab(item.tab_id)"
         >
           <span class="text-base font-semibold text-white">{{ item.name }}</span>
         </div>
@@ -32,15 +32,16 @@
           class="flex flex-row w-full gap-4"
         >
           <input
-            v-model="item.speaker"
+            v-model="item.name"
             type="text"
             class="input input_shadow"
             placeholder="Название доклада"
+            @change="onUpdatePresentation(item)"
           >
 
           <TrashIcon
             class="w-7 text-gray-500 cursor-pointer transition transition-all duration-500 hover:text-gray-700 stroke-1"
-            @click="onDeletePresentation(item, index)"
+            @click="removePresentation(item?.presentation_id, index)"
           />
         </div>
 
@@ -84,17 +85,17 @@ export default {
   name: 'CreateVoteModal',
   mixins: [ModalMixin],
   props: {
-    vote: {
-      type: Object,
-      default: null
-    },
-    elements: {
-      type: Array,
-      default: null
-    },
     isEditing: {
       type: Boolean,
       default: false
+    },
+    title: {
+      type: String,
+      default: 'Создание голосования'
+    },
+    vote: {
+      type: Object,
+      default: () => {}
     }
   },
   components: {
@@ -103,9 +104,8 @@ export default {
     TrashIcon
   },
   setup (props) {
-    const { vote, elements, isEditing } = toRefs(props)
+    const { isEditing, vote } = toRefs(props)
     const store = useStore()
-    const presentations = ref([])
     const buttons = ref([
       {
         value: 'Добавить',
@@ -114,16 +114,39 @@ export default {
           name: 'PlusCircleIcon',
           classes: 'w-5 text-white stroke-1 mr-2'
         },
-        onClick: () => {
-          presentations.value.push({ speaker: '' })
+        onClick: async () => {
+          let payload = {
+            name: 'Введите название доклада'
+          }
+
+          if (isEditing.value) {
+            const newPresentation = await store.dispatch('Vote/createPresentation', {
+              ...payload,
+              vote_id: vote.value.vote_id
+            })
+
+            payload = {
+              ...payload,
+              presentation_id: newPresentation.presentation_id
+            }
+          }
+
+          presentations.value.push(payload)
         }
       },
       {
         value: 'Сохранить',
         classes: 'button button_normal button_success',
         icon: null,
-        onClick: (fn) => {
-          onSaveVote(fn)
+        onClick: async (fn) => {
+          if (isEditing.value) {
+            await getVotes()
+            fn()
+
+            return
+          }
+
+          await onSaveVote(fn)
         }
       },
       {
@@ -139,73 +162,84 @@ export default {
       return store.state.Translation.tabs
     })
     const selectedTab = ref(null)
-
-    if (vote.value && elements.value) {
-      selectedTab.value = {
-        id: vote.value.section_id,
-        name: vote.value.section_name
-      }
-      elements.value.forEach(item => presentations.value.push(item))
-    }
+    const presentations = ref([])
 
     onMounted(async () => {
-      if (!store.state.Translation.tabs) {
-        const tabs = await store.dispatch('Translation/getTabs')
-        store.commit('Translation/setTabs', tabs)
+      const updatedTabs = await store.dispatch('Translation/getTabs')
+      store.commit('Translation/setTabs', updatedTabs)
+
+      if (updatedTabs.length) {
+        selectedTab.value = isEditing.value ? vote.value.tab_id : updatedTabs[0].tab_id
+      }
+
+      if (isEditing.value) {
+        const { vote_id: voteID } = vote.value
+        const targetVote = await store.dispatch('Vote/getVotes', { vote_id: voteID })
+
+        presentations.value = targetVote.presentations
       }
     })
 
-    async function onDeletePresentation (item, index) {
-      if (Object.keys(item).includes('id')) {
-        await store.dispatch('Vote/deletePresentation', item.id)
-      }
-
-      presentations.value.splice(index, 1)
-    }
-
     async function onSaveVote (close) {
-      if (!(presentations.value.length && selectedTab.value)) {
-        return alert('Вы обязательно должны выбрать секцию и добавить хотя бы одного докладчика')
+      if (!selectedTab.value) {
+        return alert('Нужно выбать секцию для которой создается голосование')
       }
 
-      const { id, name } = selectedTab.value
-
-      if (isEditing.value) {
-        await store.dispatch('Vote/updateVote', {
-          id: vote.value.id,
-          sectionId: id,
-          sectionName: name,
-          presentations: presentations.value
-        })
-      } else {
-        await store.dispatch('Vote/saveVote', {
-          sectionId: id,
-          sectionName: name,
-          presentations: presentations.value
-        })
+      if (!presentations.value.length) {
+        return alert('Нужно добавить хотя бы один доклад для голосования')
       }
 
-      const votes = await store.dispatch('Vote/getVote')
-      store.commit('Vote/setVotes', votes)
+      const { tab_id: tabID, name } = tabs.value.find(item => item.tab_id === selectedTab.value)
+      const payload = {
+        tab_id: tabID,
+        tab_name: name,
+        presentations: presentations.value
+      }
 
+      await store.dispatch('Vote/createVote', payload)
+      await getVotes()
       close()
     }
 
-    function onSelectTab (tab) {
-      if (selectedTab.value?.id === tab.id) {
-        selectedTab.value = null
-        return
-      }
+    async function onSelectTab (tabID) {
+      selectedTab.value = tabID
 
-      selectedTab.value = tab
+      if (isEditing.value) {
+        const targetTab = tabs.value.find(item => item.tab_id === tabID)
+
+        await store.dispatch('Vote/updateVote', {
+          vote_id: vote.value.vote_id,
+          tab_id: targetTab.tab_id,
+          tab_name: targetTab.name
+        })
+      }
+    }
+
+    async function onUpdatePresentation (item) {
+      if (isEditing.value) {
+        await store.dispatch('Vote/updatePresentation', { name: item.name, presentation_id: item.presentation_id })
+      }
+    }
+
+    async function removePresentation (id, index) {
+      presentations.value.splice(index, 1)
+
+      if (isEditing.value) {
+        await store.dispatch('Vote/deletePresentation', { presentation_id: id })
+      }
+    }
+
+    async function getVotes () {
+      const votes = await store.dispatch('Vote/getVotes')
+      store.commit('Vote/setVotes', votes)
     }
 
     return {
       buttons,
       presentations,
-      onDeletePresentation,
-      onSaveVote,
       onSelectTab,
+      onUpdatePresentation,
+      removePresentation,
       selectedTab,
       tabs
     }

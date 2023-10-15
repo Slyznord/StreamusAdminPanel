@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { ROUTES_VERSION } from '../../../constants'
 
-import AnswerController from '../../../controllers/answer.controller'
+import AnswerController from '../../../controllers/admin/answer.controller'
 
 const router = Router()
 const CURRENT_ROUTE = `${ROUTES_VERSION}/answer`

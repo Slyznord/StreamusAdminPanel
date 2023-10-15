@@ -7,7 +7,6 @@ import {
   HasMany
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-
 import QuestionModel from './question.model'
 
 @Table({

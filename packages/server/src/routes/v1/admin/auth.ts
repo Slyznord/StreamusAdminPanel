@@ -2,7 +2,7 @@ import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { ROUTES_VERSION } from '../../../constants'
-import AdminController from '../../../controllers/admin.controller'
+import AdminController from '../../../controllers/admin/admin.controller'
 
 const router = Router()
 const {

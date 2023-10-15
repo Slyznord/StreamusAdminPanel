@@ -52,12 +52,27 @@ type settings = {
   favicon?: string | null
 }
 
+type vote = {
+  vote_id?: number,
+  tab_id?: number,
+  tab_name: string,
+  presentations?: []
+}
+
+type presentation = {
+  presentation_id?: number,
+  name: string,
+  vote_id?: number
+}
+
 export {
   admin,
   answer,
   code,
   quiz,
   question,
+  presentation,
   settings,
-  tab
+  tab,
+  vote
 }
