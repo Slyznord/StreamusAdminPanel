@@ -1,8 +1,11 @@
 import { Router } from 'express'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
 import { ROUTES_VERSION } from '../../../constants'
 import AdminController from '../../../controllers/admin/admin.controller'
+
+dotenv.config()
 
 const router = Router()
 const {

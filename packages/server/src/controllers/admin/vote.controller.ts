@@ -11,6 +11,19 @@ class VoteController {
     }
   }
 
+  public async getVotesByTabID (tab_id: number) {
+    try {
+      return await VoteModel.findOne({
+        where: {
+          tab_id
+        },
+        include: PresentationsModel
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
   public async getVote (vote_id: number) {
     try {
       return await VoteModel.findOne({

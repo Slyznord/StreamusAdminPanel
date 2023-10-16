@@ -9,6 +9,33 @@ const CURRENT_ROUTE = `${ROUTES_VERSION}/vote`
 const presentation_instance = new PresentationController()
 const vote_instance = new VoteController()
 
+router.get(`${ROUTES_VERSION}/votes`, async (req: any, res: any) => {
+  try {
+    const { tab_id } = req.query
+
+    if (!tab_id) {
+      res.status(400).send({
+        success: false,
+        message: 'Property tab_id is required.'
+      })
+
+      return
+    }
+
+    const votes = await vote_instance.getVotesByTabID(tab_id)
+
+    res.json({
+      success: true,
+      data: votes
+    })
+  } catch (error) {
+    return res.status(400).send({
+      success: false,
+      message: error
+    })
+  }
+})
+
 router.get(CURRENT_ROUTE, async (req: any, res: any) => {
   try {
     const { vote_id } = req.query

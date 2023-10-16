@@ -35,7 +35,19 @@ class UserController {
     }
   }
 
-  public async getCode (code_id: string) {
+  public async getCode (code: string) {
+    try {
+      return await UserModel.findOne({
+        where: {
+          code
+        }
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async getCodeByID (code_id: string) {
     try {
       return await UserModel.findOne({
         where: {
@@ -99,7 +111,7 @@ class UserController {
 
   public async deleteCode (code_id: string) {
     try {
-      const code = await this.getCode(code_id)
+      const code = await this.getCodeByID(code_id)
 
       if (!code) {
         return {
@@ -133,16 +145,37 @@ class UserController {
     }
   }
 
-  public async updateUserData ({ code_id, name, email, last_activity }: code) {
+  public async updateUserData ({ code_id, name, email, last_activity, refresh_token = null }: code) {
     try {
       await UserModel.update({
         name,
         email,
-        last_activity
+        last_activity,
+        refresh_token
       }, {
         returning: true,
         where: {
           code_id
+        }
+      })
+
+      return {
+        success: true,
+        message: 'OK'
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async updateActivity (code: string) {
+    try {
+      await UserModel.update({
+        last_activity: Date.now()
+      }, {
+        returning: true,
+        where: {
+          code
         }
       })
 

@@ -40,7 +40,8 @@ type code = {
   code?: string,
   name?: string,
   email?: string,
-  last_activity?: number | null
+  last_activity?: number | null,
+  refresh_token?: string | null
 }
 
 type settings = {
